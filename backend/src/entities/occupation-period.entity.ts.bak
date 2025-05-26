@@ -1,0 +1,21 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Tenant } from './tenant.entity';
+import { Apartment } from './apartment.entity';
+
+@Entity('occupation_periods')
+export class OccupationPeriod {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => Tenant, (tenant) => tenant.occupationPeriods, { eager: true })
+  tenant: Tenant;
+
+  @ManyToOne(() => Apartment, (apartment) => apartment.occupationPeriods, { eager: true })
+  apartment: Apartment;
+
+  @Column({ type: 'date' })
+  startDate: Date;
+
+  @Column({ type: 'date', nullable: true })
+  endDate?: Date;
+}
